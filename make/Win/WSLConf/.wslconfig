@@ -1,0 +1,7 @@
+[wsl2]
+debugConsole = true
+networkingMode = mirrored
+autoProxy = true
+
+[experimental]
+autoMemoryReclaim = gradual
