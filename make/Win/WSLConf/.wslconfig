@@ -1,7 +1,11 @@
 [wsl2]
-debugConsole = true
 networkingMode = mirrored
 autoProxy = true
+firewall = false
+virtiofs = true
+hardwarePerformanceCounters = true
+memory = 25769803776
+swap = 8589934592
 
 [experimental]
 autoMemoryReclaim = gradual
