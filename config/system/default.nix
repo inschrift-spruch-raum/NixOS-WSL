@@ -3,7 +3,6 @@
 {
   imports = [
     inputs.nixos-wsl.nixosModules.default
-    ./WSLLib.nix
   ];
 
   system.stateVersion = "25.05";
@@ -16,6 +15,7 @@
       user.default = "${DefaultConfig.UserName}";
     };
     usbip.enable = true;
+    useWindowsDriver = true;
   };
 
   nix.settings = {
@@ -27,7 +27,7 @@
 
     trusted-users = [ "${DefaultConfig.UserName}" ];
   };
-  
+
   time.timeZone = "Asia/Shanghai";
   i18n.defaultLocale = "zh_CN.UTF-8";
 }

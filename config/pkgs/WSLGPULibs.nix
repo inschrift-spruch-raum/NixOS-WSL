@@ -1,7 +1,12 @@
-{ pkgs, ... }:
+{ stdenv, lib }:
 
-let
-  wsl-lib = pkgs.runCommand "wsl-lib" { } ''
+stdenv.mkDerivation {
+  pname = "WSL-GPU-Libs";
+  version = "1.0";
+
+  dontUnpack = true;
+
+  installPhase = ''
     mkdir -p "$out/lib"
     ln -s /usr/lib/wsl/lib/libcudadebugger.so.1 "$out/lib"
     ln -s /usr/lib/wsl/lib/libcuda.so "$out/lib"
@@ -22,12 +27,10 @@ let
     ln -s /usr/lib/wsl/lib/libnvwgf2umx.so "$out/lib"
     ln -s /usr/lib/wsl/lib/nvidia-smi "$out/lib"
   '';
-in
-{
-  wsl.useWindowsDriver = true;
 
-  programs.nix-ld = {
-    enable = true;
-    libraries = [ wsl-lib ];
+  meta = with lib; {
+    description = "Symbolic links to WSL GPU Libs";
+    platforms = platforms.linux;
+    license = licenses.unfree;
   };
 }
