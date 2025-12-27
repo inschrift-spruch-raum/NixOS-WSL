@@ -13,7 +13,7 @@ $WSLRootDir = "$RootDir".Replace("C:\", "/mnt/c/").Replace("\", "/")
 
 Read-Host "Enter 继续"
 
-wsl --install --from-file "$RootDir\WSLSysFile\NixOS.wsl" --location "C:\WSL\NixOS" --no-launch
+wsl --install --from-file "$RootDir\WSLFile\NixOS.wsl" --location "C:\WSL\NixOS" --no-launch
 wsl --set-default "NixOS"
 wsl --shutdown
 

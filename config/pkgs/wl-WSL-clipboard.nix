@@ -4,23 +4,23 @@
 { stdenv, writeShellScriptBin, pkgs }:
 
 let
-  wsl-copy = writeShellScriptBin "wsl-copy" ''
+  wl-copy = writeShellScriptBin "wl-copy" ''
     printf '%s' "$(cat)" | ${pkgs.dos2unix}/bin/unix2dos | clip.exe
   '';
 
-  wsl-paste = writeShellScriptBin "wsl-paste" ''
+  wl-paste = writeShellScriptBin "wl-paste" ''
     powershell.exe -command Get-Clipboard | ${pkgs.dos2unix}/bin/dos2unix
   '';
 in
 
 stdenv.mkDerivation {
-  name = "WSL-clipboard";
+  name = "wl-WSL-clipboard";
   version = "1.0";
-  buildInputs = [ wsl-copy wsl-paste ];
+  buildInputs = [ wl-copy wl-paste ];
   src = ./.;
   installPhase = ''
     mkdir -p $out/bin
-    ln -s ${wsl-copy}/bin/wsl-copy $out/bin/wsl-copy
-    ln -s ${wsl-paste}/bin/wsl-paste $out/bin/wsl-paste
+    ln -s ${wl-copy}/bin/wl-copy $out/bin/wl-copy
+    ln -s ${wl-paste}/bin/wl-paste $out/bin/wl-paste
   '';
 }
