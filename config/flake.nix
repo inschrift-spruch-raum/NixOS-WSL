@@ -2,7 +2,7 @@
   description = "NixOS-WSL Initialization Plan";
 
   inputs = {
-    nixpkgs.url = "git+https://mirrors.tuna.tsinghua.edu.cn/git/nixpkgs.git?shallow=1";
+    nixpkgs.url = "git+https://mirrors.cernet.edu.cn/nixpkgs.git?shallow=1";
     
     nixos-wsl = {
       url = "github:nix-community/NixOS-WSL";

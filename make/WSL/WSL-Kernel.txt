@@ -1,0 +1,35 @@
+tar -xf WSL2-Linux-Kernel.tar.xz
+cd WSL2-Linux-Kernel/
+nix-shell -p gcc binutils flex bison pahole openssl elfutils cpio qemu-utils ncurses zlib kmod python314 bc
+
+
+
+script -q build.log
+
+
+
+make menuconfig KCONFIG_CONFIG=Microsoft/config-wsl
+make -j$(nproc) KCONFIG_CONFIG=Microsoft/config-wsl
+make -j$(nproc) INSTALL_MOD_PATH="$PWD/modules" modules_install
+
+modules_size=$(du -bs "$PWD/modules" | awk '{print $1;}');
+modules_size=$((modules_size + (256 * (1<<20))));
+
+dd if=/dev/zero of="$PWD/modules.img" bs=1024 count=$((modules_size / 1024))
+
+lo_dev=$(sudo losetup --find --show "$PWD/modules.img")
+sudo mkfs -t ext4 "$lo_dev"
+mkdir "$PWD/modules_img"
+sudo mount "$lo_dev" "$PWD/modules_img"
+
+sudo cp -r "$PWD/modules/lib/modules/$(make -s kernelrelease)"/* "$PWD/modules_img"
+
+sudo umount "$PWD/modules_img"
+sudo qemu-img convert -O vhdx "$PWD/modules.img" "$PWD/modules.vhdx"
+
+rm -f "$PWD/modules.img"
+rm -rf "$PWD/modules_img"
+
+
+
+exit

@@ -3,6 +3,7 @@
 {
   imports = [
     inputs.nixos-wsl.nixosModules.default
+    ./WSLLib.nix
   ];
 
   system.stateVersion = "25.05";
@@ -14,12 +15,17 @@
       network.hostname = "${DefaultConfig.HostName}";
       user.default = "${DefaultConfig.UserName}";
     };
+    usbip.enable = true;
   };
 
   nix.settings = {
     experimental-features = "nix-command flakes";
     
-    substituters = [ "https://mirrors.tuna.tsinghua.edu.cn/nix-channels/store" ];
+    substituters = [ "https://mirrors.cernet.edu.cn/nix-channels/store" ];
+
+    auto-optimise-store = true;
+
+    trusted-users = [ "${DefaultConfig.UserName}" ];
   };
   
   time.timeZone = "Asia/Shanghai";
