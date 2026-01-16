@@ -29,6 +29,8 @@ in
     nixvim.enable = true;
   };
 
+  hardware.nvidia.package = WSL-GPU-Libs;
+
   nixpkgs.config = {
     cudaSupport = true;
     cudaForwardCompat = true;
@@ -65,6 +67,7 @@ in
       
       ExecStart = ''
         ${pkgs.nvidia-container-toolkit}/bin/nvidia-ctk cdi generate \
+          --mode=wsl \
           --output=/etc/cdi/nvidia.yaml \
           --library-search-path=/run/opengl-driver/lib
       '';
