@@ -5,7 +5,7 @@
     inputs.nixos-wsl.nixosModules.default
   ];
 
-  system.stateVersion = "25.11";
+  system.stateVersion = "26.05";
 
   wsl = {
     enable = true;
