@@ -1,7 +1,6 @@
 { inputs, config, lib, pkgs, ... }:
 
 let
-  WSL-GPU-Libs = pkgs.callPackage ./WSLGPULibs.nix { };
   wl-WSL-clipboard = pkgs.callPackage ./wl-WSL-clipboard.nix { };
 in
 {
@@ -23,13 +22,16 @@ in
   programs = {
     nix-ld = {
       enable = true;
-      libraries = [ WSL-GPU-Libs ];
+      libraries = [
+        config.wsl.wslLib
+      ];
     };
     
     nixvim.enable = true;
   };
 
-  hardware.nvidia.package = WSL-GPU-Libs;
+  # https://github.com/nix-community/NixOS-WSL/issues/716#issuecomment-3761151768
+  hardware.nvidia.package = config.wsl.wslLib;
 
   nixpkgs.config = {
     cudaSupport = true;

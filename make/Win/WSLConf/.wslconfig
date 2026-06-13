@@ -9,3 +9,5 @@ swap = 8589934592
 
 [experimental]
 autoMemoryReclaim = gradual
+bestEffortDnsParsing = true
+hostAddressLoopback = true

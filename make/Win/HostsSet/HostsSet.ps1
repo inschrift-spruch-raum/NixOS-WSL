@@ -1,3 +1,5 @@
+# 当代理软件出现错误时,才可能需要这个脚本
+
 $source = Join-Path "$PSScriptRoot" "hosts"
 $destination = "C:\Windows\System32\drivers\etc\hosts"
 $backup = "C:\Windows\System32\drivers\etc\hosts.bak"
